@@ -7,7 +7,7 @@
  * Web App URL خروجی از Google Apps Script
  */
 export const APPS_SCRIPT_URL =
-  'https://script.google.com/macros/s/XXXXXXXXXXXXXXX/exec';
+  'https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZUKu_7QxyH1qqdf9QIlptwVzOF0PxKO2F6UYU7rQ/exec';
 // ↑ اینو همونی بذار که الان داری استفاده می‌کنی
 
 
