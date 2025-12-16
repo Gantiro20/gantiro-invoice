@@ -159,49 +159,39 @@ export const updateGlobalVatRate = (rate: number) => {
 };
 
 // --- Sellers ---
-export const loginOrRegisterSeller = async (mobile: string, fullName?: string, email?: string): Promise<Seller> => {
-    const sellers = getStorage<Seller>(STORAGE_KEYS.SELLERS);
-    const existing = sellers.find(s => s.mobile === mobile);
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZUKu_7QxyH1qqdf9QIlptwVzOF0PxKO2F6UYU7rQ/exec';
 
-    if (existing) {
-        return existing;
-    }
+export const loginOrRegisterSeller = async (
+  mobile: string,
+  fullName?: string,
+  email?: string
+): Promise<Seller> => {
+  const action = fullName ? 'register_user' : 'login_user';
 
-    if (!fullName) throw new Error("کاربر یافت نشد. لطفا ثبت نام کنید.");
+  const res = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      action,
+      mobile,
+      full_name: fullName,
+      email,
+    }),
+  });
 
-    const newSeller: Seller = {
-        seller_id: generateId('S'),
-        full_name: fullName,
-        mobile,
-        email: email || '',
-        role: 'seller',
-        can_see_history: false,
-        created_at: new Date().toISOString(),
-        status: 'active'
-    };
+  if (!res.ok) {
+    throw new Error('خطا در ارتباط با سرور');
+  }
 
-    sellers.push(newSeller);
-    setStorage(STORAGE_KEYS.SELLERS, sellers);
-    
-    // Attempt to save to sheet if connected
-    try {
-        await appendRowToSheet(SHEET_IDS.SELLERS, 'Sheet1!A:J', [
-            newSeller.seller_id,
-            newSeller.full_name,
-            newSeller.full_name.split(' ')[0], // First Name rough guess
-            newSeller.full_name.split(' ').slice(1).join(' '), // Last Name rough guess
-            newSeller.mobile,
-            newSeller.email,
-            newSeller.role,
-            newSeller.can_see_history,
-            newSeller.created_at,
-            newSeller.status
-        ]);
-    } catch (e) {
-        console.warn('Could not save seller to sheet (Auth required)', e);
-    }
-    
-    return newSeller;
+  const data = await res.json();
+
+  if (!data.success) {
+    throw new Error(data.message || 'خطای لاگین');
+  }
+
+  return data.user as Seller;
 };
 
 export const getSellers = async (): Promise<Seller[]> => {
