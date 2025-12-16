@@ -174,11 +174,11 @@ export const loginOrRegisterSeller = async (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      action,
-      mobile,
-      full_name: fullName,
-      email,
-    }),
+  action,
+  mobile,
+  full_name: fullName,
+  email: email ?? '',
+}),
   });
 
   if (!res.ok) {
