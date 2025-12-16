@@ -7,7 +7,7 @@ export const SHEET_IDS = {
 };
 
 export const DRIVE_FOLDERS = {
-    PDF_INVOICES: '18FqevUH7dojFPY74vKzwQx6XO6w0h3kJ',
+    PDF_INVOICES: '1kw3RVie9DdHvqruk-JIhBwUXhhJ6jb0y',
 };
 
 // *** IMPORTANT: You must replace these with your actual Google Cloud Console Credentials ***
