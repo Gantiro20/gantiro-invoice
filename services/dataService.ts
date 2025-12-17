@@ -5,7 +5,7 @@ import { https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZU
  * تنها راه ارتباط UI با بک‌اند
  */
 async function callBackend<T>(payload: any): Promise<T> {
-  const res = await fetch(APPS_SCRIPT_URL, {
+  const res = await fetch(https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZUKu_7QxyH1qqdf9QIlptwVzOF0PxKO2F6UYU7rQ/exec, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
