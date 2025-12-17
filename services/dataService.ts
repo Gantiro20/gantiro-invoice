@@ -1,5 +1,5 @@
 import { Seller, Customer, Invoice } from '../types';
-import { APPS_SCRIPT_URL } from '../constants';
+import { https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZUKu_7QxyH1qqdf9QIlptwVzOF0PxKO2F6UYU7rQ/exec } from '../constants';
 
 /**
  * تنها راه ارتباط UI با بک‌اند
