@@ -6,8 +6,9 @@
  * تنها و تنها نقطه اتصال UI به بک‌اند
  * هر لاگین، هر ثبت‌نام، هر فاکتور از این URL رد می‌شود
  */
-export const APPS_SCRIPT_URL =
-  'https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZUKu_7QxyH1qqdf9QIlptwVzOF0PxKO2F6UYU7rQ/exec';
+// src/constants.ts
+export const BACKEND_URL =
+  "https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZUKu_7QxyH1qqdf9QIlptwVzOF0PxKO2F6UYU7rQ/exec";
 
 
 // ===============================
