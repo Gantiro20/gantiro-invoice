@@ -1,14 +1,13 @@
 // ===============================
-// Backend (Apps Script)
+// Backend (Apps Script) – SINGLE SOURCE OF TRUTH
 // ===============================
 
 /**
- * تنها نقطه اتصال UI به بک‌اند
- * Web App URL خروجی از Google Apps Script
+ * تنها و تنها نقطه اتصال UI به بک‌اند
+ * هر لاگین، هر ثبت‌نام، هر فاکتور از این URL رد می‌شود
  */
 export const APPS_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZUKu_7QxyH1qqdf9QIlptwVzOF0PxKO2F6UYU7rQ/exec';
-// ↑ اینو همونی بذار که الان داری استفاده می‌کنی
 
 
 // ===============================
@@ -22,12 +21,12 @@ export const PAYMENT_CONFIG = {
 
 
 // ===============================
-// Initial Local Seed Data (UI only)
+// UI Seed Data (ONLY FOR FIRST LOAD / FALLBACK)
 // ===============================
 
 /**
- * فقط برای حالت لوکال / اولین اجرا
- * منبع اصلی دیتا بک‌اند است، نه این‌ها
+ * ⚠️ فقط برای نمایش اولیه UI
+ * منبع اصلی دیتا: Google Sheet از طریق Apps Script
  */
 export const INITIAL_PRODUCTS = [
   {
@@ -65,17 +64,12 @@ export const INITIAL_PRODUCTS = [
 ];
 
 
+// ===============================
+// ❌ REMOVED: LOCAL ADMIN
+// ===============================
+
 /**
- * فقط برای لاگین ادمین لوکال (در صورت نیاز)
- * منبع اصلی یوزرها: Sheet → Apps Script
+ * ❌ حذف شد
+ * لاگین ادمین باید از بک‌اند بیاد، نه localStorage
  */
-export const INITIAL_ADMIN = {
-  seller_id: 'S-ADMIN',
-  full_name: 'مدیر سیستم',
-  mobile: '09120000000',
-  email: 'admin@gantiro.com',
-  role: 'admin',
-  can_see_history: true,
-  created_at: new Date().toISOString(),
-  status: 'active',
-};
+// export const INITIAL_ADMIN = { ... }
