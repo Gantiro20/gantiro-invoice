@@ -66,11 +66,12 @@ const App: React.FC = () => {
      Auth gate
   ========================== */
   if (!user) {
-    if (route === '#admin-login') {
-      return <AdminLogin onLogin={handleLogin} />;
-    }
-    return <Login onLogin={handleLogin} />;
+  // فقط اگر فلگ مخصوص ادمین وجود داشته باشد
+  if (route === '#admin-login' && sessionStorage.getItem('ALLOW_ADMIN_LOGIN') === '1') {
+    return <AdminLogin onLogin={handleLogin} />;
   }
+  return <Login onLogin={handleLogin} />;
+}
 
   /* =========================
      Route resolution
