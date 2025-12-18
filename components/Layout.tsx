@@ -56,20 +56,17 @@ export const Layout: React.FC<LayoutProps> = ({
                                         </div>
                                         
                                         {canViewHistory && (
-                                            <button 
-                                                onClick={() => {
-                                                    onClick={() => {
-  onNavigate('#dashboard');
-  setIsMenuOpen(false);
-}}
-                                                    setIsMenuOpen(false);
-                                                }}
-                                                className="w-full text-right px-4 py-3 hover:bg-gray-50 text-gray-700 flex items-center text-sm transition border-b border-gray-100"
-                                            >
-                                                <span className="material-icons-round ml-3 text-lg text-indigo-600">analytics</span>
-                                                آمار فروش
-                                            </button>
-                                        )}
+  <button 
+    onClick={() => {
+      onNavigate('#dashboard');
+      setIsMenuOpen(false);
+    }}
+    className="w-full text-right px-4 py-3 hover:bg-gray-50 text-gray-700 flex items-center text-sm transition border-b border-gray-100"
+  >
+    <span className="material-icons-round ml-3 text-lg text-indigo-600">analytics</span>
+    آمار فروش
+  </button>
+)}
 
                                         <button 
                                             onClick={onLogout}
