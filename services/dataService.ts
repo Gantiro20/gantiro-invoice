@@ -4,16 +4,13 @@ import { BACKEND_URL } from "../constants";
  * تنها راه ارتباط UI با بک‌اند
  */
 async function callBackend<T>(payload: any): Promise<T> {
-  const res = await fetch(
-    "https://script.google.com/macros/s/AKfycbzI7CfAQpnu9FAxy-T42AB55wY5AFZUKu_7QxyH1qqdf9QIlptwVzOF0PxKO2F6UYU7rQ/exec",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    }
-  );
+  const res = await fetch(BACKEND_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(payload),
+});
 
   if (!res.ok) {
     throw new Error("خطا در ارتباط با سرور");
