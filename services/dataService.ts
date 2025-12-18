@@ -6,29 +6,23 @@ import { BACKEND_URL } from "../constants";
 async function callBackend<T>(payload: any): Promise<T> {
   const res = await fetch(BACKEND_URL, {
     method: "POST",
-    mode: "cors",            // 🔴 خیلی مهم
-    cache: "no-cache",
-    credentials: "omit",     // 🔴 خیلی مهم
+    mode: "cors",
+    credentials: "omit",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "text/plain;charset=utf-8",
     },
     body: JSON.stringify(payload),
   });
 
-  if (!res.ok) {
-    throw new Error("Network error");
-  }
-
-  const data = await res.json();
-  console.log("BACKEND RESPONSE:", data);
+  const text = await res.text();
+  const data = JSON.parse(text);
 
   if (!data.success) {
-    throw new Error(data.message || JSON.stringify(data));
+    throw new Error(data.message || "خطای بک‌اند");
   }
 
   return data;
 }
-
 /* ===============================
    SELLERS (AUTH)
 ================================ */
