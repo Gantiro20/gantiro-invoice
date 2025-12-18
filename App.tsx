@@ -7,108 +7,127 @@ import { AdminDashboard } from './pages/AdminDashboard';
 import { InvoiceCreate } from './pages/InvoiceCreate';
 import { Layout } from './components/Layout';
 
-// Simple Hash Router Implementation
+const DEFAULT_ROUTE = '#create';
+
+const normalizeHash = (hash: string) => {
+  if (!hash) return DEFAULT_ROUTE;
+  return hash.startsWith('#') ? hash : `#${hash}`;
+};
+
 const App: React.FC = () => {
-    const [user, setUser] = useState<Seller | null>(null);
-    const [route, setRoute] = useState<string>(window.location.hash || '#create');
+  const [user, setUser] = useState<Seller | null>(null);
+  const [route, setRoute] = useState<string>(
+    normalizeHash(window.location.hash)
+  );
 
-    useEffect(() => {
-        // Restore session if exists (in real app, verify token)
-        const savedUser = localStorage.getItem('gantiro_user_session');
-        if (savedUser) {
-            setUser(JSON.parse(savedUser));
-        }
-
-        const handleHashChange = () => {
-    const raw = window.location.hash || '';
-    const normalized = raw.replace(/^#\/?/, '#');
-    setRoute(normalized);
-};
-
-        window.addEventListener('hashchange', handleHashChange);
-        handleHashChange(); // Init
-
-        return () => window.removeEventListener('hashchange', handleHashChange);
-    }, []);
-
-    const handleLogin = (loggedInUser: Seller) => {
-        setUser(loggedInUser);
-        localStorage.setItem('gantiro_user_session', JSON.stringify(loggedInUser));
-        // Redirect based on role
-        if (loggedInUser.role === 'admin') {
-            window.location.hash = '#admin';
-        } else {
-            window.location.hash = '#create';
-        }
-    };
-
-    const handleLogout = () => {
-        setUser(null);
-        localStorage.removeItem('gantiro_user_session');
-        window.location.hash = '';
-    };
-
-const navigate = (hash: string) => {
-  window.location.hash = hash;
-};
-    
-    if (!user) {
-  if (route === '#admin-login') {
-    return <AdminLogin onLogin={handleLogin} />;
-  }
-  return <Login onLogin={handleLogin} />;
-}
-
-    let Content = <div />;
-    let title = 'داشبورد';
-
-    switch (route) {
-        case '#create':
-            Content = <InvoiceCreate user={user} onSuccess={() => window.location.hash = '#dashboard'} />;
-            title = 'ثبت فاکتور جدید';
-            break;
-        case '#dashboard':
-            // Check permission: Only admin or users with can_see_history permission can view
-            if (user.role === 'admin' || user.can_see_history) {
-                Content = <Dashboard user={user} />;
-                title = 'تاریخچه فروش';
-            } else {
-                Content = (
-                    <div className="flex flex-col items-center justify-center pt-20 text-gray-500 text-center px-4">
-                        <span className="material-icons-round text-6xl mb-4 text-gray-300">lock_person</span>
-                        <p className="font-bold text-lg text-gray-700">عدم دسترسی</p>
-                        <p className="mt-2 text-sm">شما مجوز مشاهده تاریخچه فروش را ندارید.</p>
-                        <button 
-                            onClick={() => window.location.hash = '#create'}
-                            className="mt-6 text-indigo-600 text-sm hover:underline"
-                        >
-                            بازگشت به ثبت فاکتور
-                        </button>
-                    </div>
-                );
-                title = 'عدم دسترسی';
-            }
-            break;
-        case '#admin':
-            if (user.role !== 'admin') {
-                Content = <div className="p-10 text-center text-red-500">دسترسی ندارید</div>;
-            } else {
-                Content = <AdminDashboard />;
-                title = 'پنل مدیریت';
-            }
-            break;
-        default:
-  // 🔴 اگر route ناشناخته بود، خودمون هدایتش می‌کنیم
-  window.location.hash = user.role === 'admin' ? '#admin' : '#create';
-  Content = <div />;
-  title = '';
+  /* =========================
+     Restore session + routing
+  ========================== */
+  useEffect(() => {
+    const savedUser = localStorage.getItem('gantiro_user_session');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
     }
 
-    return (
-        <Layout user={user} onLogout={handleLogout} title={title}>
-            {Content}
-        </Layout>
+    const handleHashChange = () => {
+      setRoute(normalizeHash(window.location.hash));
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange();
+
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  /* =========================
+     Navigation helpers
+  ========================== */
+  const navigate = (hash: string) => {
+    window.location.hash = normalizeHash(hash);
+  };
+
+  const handleLogin = (loggedInUser: Seller) => {
+    setUser(loggedInUser);
+    localStorage.setItem(
+      'gantiro_user_session',
+      JSON.stringify(loggedInUser)
     );
+
+    navigate(loggedInUser.role === 'admin' ? '#admin' : '#create');
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('gantiro_user_session');
+    navigate(DEFAULT_ROUTE);
+  };
+
+  /* =========================
+     Auth gate
+  ========================== */
+  if (!user) {
+    if (route === '#admin-login') {
+      return <AdminLogin onLogin={handleLogin} />;
+    }
+    return <Login onLogin={handleLogin} />;
+  }
+
+  /* =========================
+     Route resolution
+  ========================== */
+  let content: React.ReactNode = null;
+  let title = '';
+
+  switch (route) {
+    case '#create':
+      content = (
+        <InvoiceCreate
+          user={user}
+          onSuccess={() => navigate('#dashboard')}
+        />
+      );
+      title = 'ثبت فاکتور جدید';
+      break;
+
+    case '#dashboard':
+      if (user.role === 'admin' || user.can_see_history) {
+        content = <Dashboard user={user} />;
+        title = 'تاریخچه فروش';
+      } else {
+        navigate('#create');
+        return null;
+      }
+      break;
+
+    case '#admin':
+      if (user.role === 'admin') {
+        content = <AdminDashboard />;
+        title = 'پنل مدیریت';
+      } else {
+        navigate('#create');
+        return null;
+      }
+      break;
+
+    default:
+      navigate(user.role === 'admin' ? '#admin' : '#create');
+      return null;
+  }
+
+  /* =========================
+     Layout
+  ========================== */
+  return (
+    <Layout
+      user={user}
+      title={title}
+      route={route}
+      onNavigate={navigate}
+      onLogout={handleLogout}
+    >
+      {content}
+    </Layout>
+  );
 };
 
 export default App;
