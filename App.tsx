@@ -94,8 +94,14 @@ const App: React.FC = () => {
         content = <Dashboard user={user} />;
         title = 'تاریخچه فروش';
       } else {
-        navigate('#create');
-        return null;
+        content = (
+  <InvoiceCreate
+    user={user}
+    onSuccess={() => navigate('#dashboard')}
+  />
+);
+title = 'ثبت فاکتور جدید';
+break;
       }
       break;
 
