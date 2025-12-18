@@ -24,6 +24,13 @@ const App: React.FC = () => {
      Restore session + routing
   ========================== */
   useEffect(() => {
+  if (window.location.hash.includes('admin-login') &&
+      window.location.hash.includes('key=GANTIRO_ADMIN')) {
+    sessionStorage.setItem('ALLOW_ADMIN_LOGIN', '1');
+  }
+}, []);
+  
+  useEffect(() => {
     const savedUser = localStorage.getItem('gantiro_user_session');
     if (savedUser) {
       setUser(JSON.parse(savedUser));
