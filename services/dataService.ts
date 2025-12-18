@@ -27,19 +27,7 @@ async function callBackend<T>(payload: any): Promise<T> {
   }
 
   return data;
-}
-  if (!res.ok) {
-    throw new Error("خطا در ارتباط با سرور");
-  }
 
-  const data = await res.json();
-
-  if (!data.success) {
-    throw new Error(data.message || "خطای بک‌اند");
-  }
-
-  return data;
-}
 
 /* ===============================
    SELLERS (AUTH)
