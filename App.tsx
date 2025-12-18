@@ -10,7 +10,7 @@ import { Layout } from './components/Layout';
 // Simple Hash Router Implementation
 const App: React.FC = () => {
     const [user, setUser] = useState<Seller | null>(null);
-    const [route, setRoute] = useState<string>('');
+    const [route, setRoute] = useState<string>(window.location.hash || '#create');
 
     useEffect(() => {
         // Restore session if exists (in real app, verify token)
