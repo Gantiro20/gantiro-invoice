@@ -131,8 +131,7 @@ const normalizedMobile = normalizeMobile(mobile);
             </button>
           </div>
 
-          <div className="mt-4 text-center">
-            <button
+          
               type="button"
               onClick={() => {
                 window.location.hash = '#admin-login';
