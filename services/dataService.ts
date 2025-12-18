@@ -107,3 +107,11 @@ export async function listInvoicesBySeller(
 
   return data.invoices;
 }
+
+export async function adminLogin(email: string, password: string) {
+  // فعلاً فقط با موبایل یا ایمیل لاگین می‌کنیم
+  return callBackend({
+    action: 'login_user',
+    mobile: email, // بعداً اصلاح می‌کنیم
+  });
+}
