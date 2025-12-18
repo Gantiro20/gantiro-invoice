@@ -100,12 +100,12 @@ export const Layout: React.FC<LayoutProps> = ({
 />
                         
                         {canViewHistory && (
-                            <NavButton icon="history" label="تاریخچه" active={window.location.hash === '#dashboard'} onClick={() => window.location.hash = '#dashboard'} />
-                        )}
+                            active={route === '#dashboard'}
+onClick={() => onNavigate('#dashboard')}
                         
                         {user.role === 'admin' && (
-                            <NavButton icon="admin_panel_settings" label="مدیریت" active={window.location.hash === '#admin'} onClick={() => window.location.hash = '#admin'} />
-                        )}
+                            active={route === '#admin'}
+onClick={() => onNavigate('#admin')}
                     </nav>
                 </div>
             )}
