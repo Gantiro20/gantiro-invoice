@@ -100,12 +100,22 @@ export const Layout: React.FC<LayoutProps> = ({
 />
                         
                         {canViewHistory && (
-                            active={route === '#dashboard'}
-onClick={() => onNavigate('#dashboard')}
+    <NavButton
+        icon="history"
+        label="تاریخچه"
+        active={route === '#dashboard'}
+        onClick={() => onNavigate('#dashboard')}
+    />
+)}
                         
                         {user.role === 'admin' && (
-                            active={route === '#admin'}
-onClick={() => onNavigate('#admin')}
+    <NavButton
+        icon="admin_panel_settings"
+        label="مدیریت"
+        active={route === '#admin'}
+        onClick={() => onNavigate('#admin')}
+    />
+)}
                     </nav>
                 </div>
             )}
