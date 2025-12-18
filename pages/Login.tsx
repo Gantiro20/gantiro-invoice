@@ -38,9 +38,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 const normalizedMobile = normalizeMobile(mobile);
       
       if (isRegistering) {
-        user = await registerSeller(mobile, fullName, email);
+        user = await registerSeller(normalizedMobile, fullName, email);
       } else {
-        user = await loginSeller(mobile);
+        user = await loginSeller(normalizedMobile);
       }
 
       onLogin(user);
