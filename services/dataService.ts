@@ -72,25 +72,7 @@ export async function registerSeller(
 /**
  * ساخت فاکتور
  */
-export async function createInvoice(payload: {
-  seller_id: string;
-  invoice_date: string;
-  payment_method?: string;
-  payment_status?: string;
-  customer: Partial<Customer>;
-  items: any[];
-  tax_amount?: number;
-  total_amount?: number;
-}): Promise<{ invoice_id: string; invoice_number: string }> {
-  const data = await callBackend<{
-    invoice: { invoice_id: string; invoice_number: string };
-  }>({
-    action: 'create_invoice',
-    ...payload,
-  });
 
-  return data.invoice;
-}
 
 /**
  * لیست فاکتورهای یک فروشنده
