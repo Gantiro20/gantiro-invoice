@@ -21,19 +21,9 @@ const App: React.FC = () => {
   );
 
 /* =========================
-   Restore session + routing + admin gate
+   Restore session + routing
 ========================== */
 useEffect(() => {
-  const hash = window.location.hash || '';
-
-  // 🔐 Admin gate (ONLY via secret key)
-  if (
-    hash.startsWith('#admin-login') &&
-    hash.includes('key=GANTIRO_ADMIN')
-  ) {
-    sessionStorage.setItem('ALLOW_ADMIN_LOGIN', '1');
-  }
-
   // ♻️ Restore session
   const savedUser = localStorage.getItem('gantiro_user_session');
   if (savedUser) {
@@ -52,7 +42,6 @@ useEffect(() => {
     window.removeEventListener('hashchange', handleHashChange);
   };
 }, []);
-
   
   /* =========================
      Navigation helpers
@@ -80,11 +69,20 @@ useEffect(() => {
   /* =========================
      Auth gate
   ========================== */
-  if (!user) {
-  // فقط اگر فلگ مخصوص ادمین وجود داشته باشد
-  if (route === '#admin-login' && sessionStorage.getItem('ALLOW_ADMIN_LOGIN') === '1') {
+ /* =========================
+   Auth Gate (FINAL – CLEAN)
+========================== */
+
+const hash = window.location.hash || '';
+const isAdminRoute =
+  hash.startsWith('#admin-login') &&
+  hash.includes('key=GANTIRO_ADMIN');
+
+if (!user) {
+  if (isAdminRoute) {
     return <AdminLogin onLogin={handleLogin} />;
   }
+
   return <Login onLogin={handleLogin} />;
 }
 
