@@ -89,11 +89,13 @@ export async function listInvoicesBySeller(
 }
 
 export async function adminLogin(email: string, password: string) {
-  // فعلاً فقط با موبایل یا ایمیل لاگین می‌کنیم
-  return callBackend({
-    action: 'login_user',
-    mobile: email, // بعداً اصلاح می‌کنیم
+  const data = await callBackend<{ user: any }>({
+    action: 'admin_login',
+    email,
+    password,
   });
+
+  return data.user;
 }
 
 // گرفتن فاکتورهای یک فروشنده
