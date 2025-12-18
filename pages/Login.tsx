@@ -16,6 +16,7 @@ function normalizeMobile(input: string): string {
     .replace(/[۰-۹]/g, d => String(persianDigits.indexOf(d)))
     .replace(/[٠-٩]/g, d => String(arabicDigits.indexOf(d)))
     .replace(/\s+/g, '')
+    .replace(/^0+/, '')
     .trim();
 }
 
