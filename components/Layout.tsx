@@ -58,7 +58,10 @@ export const Layout: React.FC<LayoutProps> = ({
                                         {canViewHistory && (
                                             <button 
                                                 onClick={() => {
-                                                    window.location.hash = '#dashboard';
+                                                    onClick={() => {
+  onNavigate('#dashboard');
+  setIsMenuOpen(false);
+}}
                                                     setIsMenuOpen(false);
                                                 }}
                                                 className="w-full text-right px-4 py-3 hover:bg-gray-50 text-gray-700 flex items-center text-sm transition border-b border-gray-100"
