@@ -83,9 +83,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
                     </button>
                 </div>
                 
-                <div className="mt-8 pt-4 border-t border-gray-100 text-center text-xs text-gray-400">
-                    <p>رمز عبور پیش‌فرض: 123456</p>
-                </div>
+                
             </div>
         </div>
     </div>
