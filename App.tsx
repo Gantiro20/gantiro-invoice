@@ -110,8 +110,14 @@ const App: React.FC = () => {
       break;
 
     default:
-      navigate(user.role === 'admin' ? '#admin' : '#create');
-      return null;
+  content = (
+    <InvoiceCreate
+      user={user}
+      onSuccess={() => navigate('#dashboard')}
+    />
+  );
+  title = 'ثبت فاکتور جدید';
+  break;
   }
 
   /* =========================
