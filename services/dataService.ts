@@ -130,3 +130,19 @@ export async function getSellers() {
   // فعلاً آرایه خالی برمی‌گردونیم که UI کرش نکنه
   return [];
 }
+
+// آپدیت دسترسی فروشنده (فعلاً mock)
+export async function updateSellerPermission(
+  sellerId: string,
+  permission: string,
+  value: boolean
+) {
+  // چون هنوز endpoint واقعی نداریم
+  // فقط موفق برمی‌گردونیم تا UI کرش نکنه
+  return {
+    success: true,
+    sellerId,
+    permission,
+    value,
+  };
+}
