@@ -27,7 +27,7 @@ async function callBackend<T>(payload: any): Promise<T> {
   }
 
   return data;
-
+}
 
 /* ===============================
    SELLERS (AUTH)
