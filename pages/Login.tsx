@@ -132,15 +132,7 @@ const normalizedMobile = normalizeMobile(mobile);
           </div>
 
           
-              type="button"
-              onClick={() => {
-                window.location.hash = '#admin-login';
-              }}
-              className="text-gray-400 text-xs hover:text-gray-600"
-            >
-              ورود ادمین
-            </button>
-          </div>
+              
         </div>
       </div>
     </div>
