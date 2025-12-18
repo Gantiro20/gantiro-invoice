@@ -76,7 +76,7 @@ useEffect(() => {
 const hash = window.location.hash || '';
 const isAdminRoute =
   hash.startsWith('#admin-login') &&
-  hash.includes('key=GANTIRO_ADMIN');
+  hash.includes('key=GANTIRO_ADMIN_42568921456');
 
 if (!user) {
   if (isAdminRoute) {
