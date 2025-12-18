@@ -20,32 +20,40 @@ const App: React.FC = () => {
     normalizeHash(window.location.hash)
   );
 
-  /* =========================
-     Restore session + routing
-  ========================== */
-  useEffect(() => {
-  if (window.location.hash.includes('admin-login') &&
-      window.location.hash.includes('key=GANTIRO_ADMIN')) {
+/* =========================
+   Restore session + routing + admin gate
+========================== */
+useEffect(() => {
+  const hash = window.location.hash || '';
+
+  // 🔐 Admin gate (ONLY via secret key)
+  if (
+    hash.startsWith('#admin-login') &&
+    hash.includes('key=GANTIRO_ADMIN')
+  ) {
     sessionStorage.setItem('ALLOW_ADMIN_LOGIN', '1');
   }
+
+  // ♻️ Restore session
+  const savedUser = localStorage.getItem('gantiro_user_session');
+  if (savedUser) {
+    setUser(JSON.parse(savedUser));
+  }
+
+  // 🧭 Routing
+  const handleHashChange = () => {
+    setRoute(normalizeHash(window.location.hash));
+  };
+
+  window.addEventListener('hashchange', handleHashChange);
+  handleHashChange();
+
+  return () => {
+    window.removeEventListener('hashchange', handleHashChange);
+  };
 }, []);
+
   
-  useEffect(() => {
-    const savedUser = localStorage.getItem('gantiro_user_session');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-
-    const handleHashChange = () => {
-      setRoute(normalizeHash(window.location.hash));
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
-
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
   /* =========================
      Navigation helpers
   ========================== */
