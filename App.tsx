@@ -20,8 +20,10 @@ const App: React.FC = () => {
         }
 
         const handleHashChange = () => {
-            setRoute(window.location.hash);
-        };
+    const raw = window.location.hash || '';
+    const normalized = raw.replace(/^#\/?/, '#');
+    setRoute(normalized);
+};
 
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange(); // Init
