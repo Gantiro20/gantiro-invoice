@@ -6,6 +6,8 @@ interface LayoutProps {
     user: Seller | null;
     onLogout: () => void;
     title: string;
+    route: string;
+    onNavigate: (hash: string) => void;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, user, onLogout, title }) => {
