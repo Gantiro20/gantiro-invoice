@@ -8,6 +8,17 @@ interface LoginProps {
   onLogin: (user: Seller) => void;
 }
 
+function normalizeMobile(input: string): string {
+  const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+  const arabicDigits  = '٠١٢٣٤٥٦٧٨٩';
+
+  return input
+    .replace(/[۰-۹]/g, d => String(persianDigits.indexOf(d)))
+    .replace(/[٠-٩]/g, d => String(arabicDigits.indexOf(d)))
+    .replace(/\s+/g, '')
+    .trim();
+}
+
 export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [mobile, setMobile] = useState('');
