@@ -48,6 +48,10 @@ const App: React.FC = () => {
         window.location.hash = '';
     };
 
+const navigate = (hash: string) => {
+  window.location.hash = hash;
+};
+    
     if (!user) {
   if (route === '#admin-login') {
     return <AdminLogin onLogin={handleLogin} />;
