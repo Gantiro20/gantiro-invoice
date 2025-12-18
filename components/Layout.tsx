@@ -75,7 +75,7 @@ export const Layout: React.FC<LayoutProps> = ({
                         {user.full_name}
                       </p>
                       <p className="text-xs text-gray-500 truncate">
-                        {user.mobile.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])}
+                        {String(user?.mobile ?? '').replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])}
                       </p>
                     </div>
 
