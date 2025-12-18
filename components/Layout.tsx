@@ -10,7 +10,14 @@ interface LayoutProps {
     onNavigate: (hash: string) => void;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children, user, onLogout, title }) => {
+export const Layout: React.FC<LayoutProps> = ({
+    children,
+    user,
+    onLogout,
+    title,
+    route,
+    onNavigate
+}) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // Helper to check permission
