@@ -115,3 +115,18 @@ export async function adminLogin(email: string, password: string) {
     mobile: email, // بعداً اصلاح می‌کنیم
   });
 }
+
+// گرفتن فاکتورهای یک فروشنده
+export async function getInvoices(sellerId: string) {
+  return callBackend({
+    action: "list_invoices_by_seller",
+    seller_id: sellerId,
+  });
+}
+
+// گرفتن لیست فروشنده‌ها (فعلاً ساده / فیک)
+export async function getSellers() {
+  // چون بک‌اندت هنوز endpoint فروشنده‌ها نداره
+  // فعلاً آرایه خالی برمی‌گردونیم که UI کرش نکنه
+  return [];
+}
