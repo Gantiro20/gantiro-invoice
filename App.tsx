@@ -94,14 +94,10 @@ const App: React.FC = () => {
             }
             break;
         default:
-             // Default redirection
-             if (user.role === 'admin') {
-                Content = <AdminDashboard />;
-                title = 'پنل مدیریت';
-             } else {
-                Content = <InvoiceCreate user={user} onSuccess={() => window.location.hash = '#dashboard'} />;
-                title = 'ثبت فاکتور جدید';
-             }
+  // 🔴 اگر route ناشناخته بود، خودمون هدایتش می‌کنیم
+  window.location.hash = user.role === 'admin' ? '#admin' : '#create';
+  Content = <div />;
+  title = '';
     }
 
     return (
