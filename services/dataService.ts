@@ -5,13 +5,29 @@ import { BACKEND_URL } from "../constants";
  */
 async function callBackend<T>(payload: any): Promise<T> {
   const res = await fetch(BACKEND_URL, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(payload),
-});
+    method: "POST",
+    mode: "cors",            // 🔴 خیلی مهم
+    cache: "no-cache",
+    credentials: "omit",     // 🔴 خیلی مهم
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
 
+  if (!res.ok) {
+    throw new Error("Network error");
+  }
+
+  const data = await res.json();
+  console.log("BACKEND RESPONSE:", data);
+
+  if (!data.success) {
+    throw new Error(data.message || JSON.stringify(data));
+  }
+
+  return data;
+}
   if (!res.ok) {
     throw new Error("خطا در ارتباط با سرور");
   }
