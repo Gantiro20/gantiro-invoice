@@ -110,8 +110,14 @@ break;
         content = <AdminDashboard />;
         title = 'پنل مدیریت';
       } else {
-        navigate('#create');
-        return null;
+        content = (
+  <InvoiceCreate
+    user={user}
+    onSuccess={() => navigate('#dashboard')}
+  />
+);
+title = 'ثبت فاکتور جدید';
+break;
       }
       break;
 
