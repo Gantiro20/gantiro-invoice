@@ -146,3 +146,34 @@ export async function updateSellerPermission(
     value,
   };
 }
+
+// VAT سراسری (فعلاً mock)
+let _globalVatRate = 0.09; // ۹٪ پیش‌فرض - هرچی خواستی بعداً عوض کن
+
+export async function getGlobalVatRate() {
+  return _globalVatRate;
+}
+
+export async function updateGlobalVatRate(newRate: number) {
+  _globalVatRate = Number(newRate) || 0;
+  return { success: true, vatRate: _globalVatRate };
+}
+
+// محصولات (فعلاً mock)
+export async function getProducts() {
+  return [];
+}
+
+// پیدا کردن مشتری با موبایل (فعلاً mock)
+export async function findCustomerByMobile(mobile: string) {
+  return null;
+}
+
+// ساخت فاکتور (واقعی: وصل به Apps Script)
+export async function createInvoice(payload: any) {
+  // اگر UI همین payload رو درست می‌فرسته، این مستقیم می‌ره به بک‌اندت
+  return callBackend({
+    action: "create_invoice",
+    ...payload,
+  });
+}
